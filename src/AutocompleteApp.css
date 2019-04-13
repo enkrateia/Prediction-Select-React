@@ -3,12 +3,13 @@
   margin: 100px auto 0;
 }
 
-.autocomplete-app > * {
+.autocomplete-app > *,
+.autocomplete-app input {
   display: block;
   width: 100%;
   outline: none;
   margin: 0;
-  border: 1px solid #008FB2;
+  border: 1px solid #008fb2;
 
   font-family: helvetica;
   font-weight: 100;
@@ -17,13 +18,30 @@
 .autocomplete-app input {
   padding: 10px 20px;
   font-size: 20px;
+  width: 100%;
+}
+.autocomplete-app .container {
+  position: relative;
+}
+
+.autocomplete-app .container > span {
+  position: absolute;
+  right: 10px;
+  top: 16px;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.autocomplete-app .container .element-list {
+  max-height: 500px;
+  overflow-y: overlay;
 }
 
 .autocomplete-suggestions {
   border-top: none;
   color: #555;
   font-size: 14px;
-  box-shadow: 0 1px 3px #B3B3B3;
+  box-shadow: 0 1px 3px #b3b3b3;
 }
 
 .autocomplete-suggestions:empty {
@@ -36,11 +54,11 @@
 
 .autocomplete-suggestions li.selected,
 .autocomplete-suggestions li:hover {
-  background: #E2F2F6;
+  background: #e2f2f6;
 }
 
 .autocomplete-suggestions li:not(:last-child) {
-  border-bottom: 1px solid #008FB2;
+  border-bottom: 1px solid #008fb2;
 }
 
 .autocomplete-suggestions li:not(:first-child) {
