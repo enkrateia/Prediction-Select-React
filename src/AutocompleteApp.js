@@ -1,41 +1,42 @@
 import React from "react";
 import "./AutocompleteApp.css";
-import Predictions from "./Predictions";
+import PredictionList from "./PredictionList";
+import books from "./books.js";
 
 export default class AutocompleteApp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { autocomplete: "", coincidences: 0 };
-    this.coincidences = 0;
+    this.state = { autocomplete: "" };
   }
 
   handleChange = event => {
     this.setState({ autocomplete: event.target.value });
   };
 
-  handlePrediction = number => {
-    this.coincidences = number;
-  };
-
-  componentDidUpdate(_, prevState) {
-    if (prevState.coincidences !== this.coincidences) {
-      this.setState({ coincidences: this.coincidences });
-    }
-  }
-
-  // TODO: Use the data in `books` to complete this application.
   render() {
+    let values;
+    if (this.state.autocomplete !== "") {
+      values = books.data.filter(ele => {
+        return (
+          ele.title.toUpperCase().includes(this.state.autocomplete.toUpperCase()) ||
+          ele.description.toUpperCase().includes(this.state.autocomplete.toUpperCase()) ||
+          ele.primaryCategory.toUpperCase().includes(this.state.autocomplete.toUpperCase())
+        );
+      });
+    } else {
+      values = [];
+    }
     return (
       <form className="autocomplete-app">
-        <div className="container">
+        <div className="input-container">
           <input type="text" autoFocus onChange={this.handleChange} value={this.state.autocomplete} />
-          <span>{`${this.state.coincidences} coincidences`}</span>
-          <div className="element-list">
-            <ul className="autocomplete-suggestions">
-              <Predictions inputValue={this.state.autocomplete} setPredictions={this.handlePrediction} />
-            </ul>
-          </div>
+          <span>{`${values.length} coincidences`}</span>
         </div>
+        <ul className="autocomplete-suggestions">
+          {values.map((ele, index) => (
+            <PredictionList item={ele} key={index} autocomplete={this.state.autocomplete}/>
+          ))}
+        </ul>
       </form>
     );
   }
